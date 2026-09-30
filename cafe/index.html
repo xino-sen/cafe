@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f4511e">
+<title>Cafe – Food delivery</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Lobster&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+:root{--brand:#f4511e;--ink:#1f1a17;--soft:#fff5f0;--line:#eee}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);background:#fff;padding-bottom:70px}
+.cafe-word{font-family:Lobster,cursive;font-weight:400;font-size:1.8rem;color:var(--brand)}
+.announcement{background:var(--ink);color:#fff;text-align:center;padding:.5rem;font-size:.85rem}
+.announcement b{color:#ffb199}
+.navbar{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-search{position:relative;width:100%;max-width:380px}
+.nav-search i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#999}
+.nav-search input{width:100%;border:1px solid var(--line);background:#faf7f5;border-radius:50px;padding:.55rem 1rem .55rem 2.4rem}
+.cart-button{display:inline-flex;gap:.4rem;align-items:center;background:var(--brand);color:#fff;border-radius:50px;padding:.45rem 1rem;text-decoration:none}
+.cart-button b{background:#fff;color:var(--brand);border-radius:50px;padding:0 .5rem;font-size:.8rem}
+.hero{background:var(--soft);padding:4rem 0}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:700;line-height:1.05}
+.hero form{display:flex;max-width:460px;margin-top:1.5rem;background:#fff;border-radius:50px;padding:.3rem;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.hero input{flex:1;border:0;outline:0;padding:0 1rem;background:none}
+.btn-brand{background:var(--brand);color:#fff;border:0;border-radius:50px;padding:.6rem 1.4rem;font-weight:600}
+.btn-brand:hover{background:#d93f0f;color:#fff}
+.hero-art{font-size:9rem;text-align:center}
+.pill{display:inline-flex;gap:.35rem;align-items:center;border:1px solid var(--line);border-radius:50px;padding:.4rem 1rem;color:var(--ink);text-decoration:none;font-size:.9rem;cursor:pointer;background:#fff}
+.pill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.food-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.25rem}
+.food-card{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff}
+.food-image{position:relative;background:var(--soft);font-size:5rem;text-align:center;padding:1.2rem 0;cursor:pointer}
+.veg-dot{position:absolute;top:10px;left:10px;width:18px;height:18px;border:2px solid #2e9e4f;border-radius:4px;display:grid;place-items:center;background:#fff}
+.veg-dot i{width:8px;height:8px;border-radius:50%;background:#2e9e4f}
+.veg-dot.non-veg{border-color:#c62828}.veg-dot.non-veg i{background:#c62828}
+.heart{position:absolute;top:8px;right:8px;border:0;background:#fff;border-radius:50%;width:34px;height:34px;font-size:1rem;color:#999}
+.heart.active{color:var(--brand)}
+.bestseller{position:absolute;bottom:8px;left:8px;background:var(--brand);color:#fff;font-size:.72rem;border-radius:50px;padding:.15rem .6rem}
+.food-body{padding:1rem}
+.food-meta{display:flex;gap:1rem;font-size:.8rem;color:#777}
+.food-meta .bi-star-fill{color:#f5a623}
+.food-body h3{font-size:1.05rem;margin:.4rem 0 .2rem;font-weight:700}
+.food-body p{font-size:.85rem;color:#777;min-height:2.6rem}
+.food-bottom{display:flex;justify-content:space-between;align-items:center}
+.price{font-weight:700}.price del{color:#aaa;font-weight:400;font-size:.8rem;margin-left:.3rem}
+.add-btn{border:1px solid var(--brand);color:var(--brand);background:#fff;border-radius:50px;padding:.3rem .9rem;font-weight:600}
+.add-btn:hover{background:var(--brand);color:#fff}
+.bill-card{border:1px solid var(--line);border-radius:18px;padding:1.5rem;position:sticky;top:90px}
+.bill-card p{display:flex;justify-content:space-between;margin:.4rem 0}
+.cart-item{display:flex;gap:1rem;align-items:center;border-bottom:1px solid var(--line);padding:1rem 0}
+.cart-item .em{font-size:2.5rem;background:var(--soft);border-radius:14px;width:70px;height:70px;display:grid;place-items:center}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:50px}
+.qty button{border:0;background:none;width:32px;height:32px;font-size:1.1rem}
+.empty{text-align:center;padding:4rem 1rem}.empty .bi{font-size:3rem;color:var(--brand)}
+.detail-emoji{font-size:11rem;background:var(--soft);border-radius:24px;text-align:center;padding:2rem}
+.auth{max-width:420px;margin:3rem auto}
+.auth input{width:100%;border:1px solid var(--line);border-radius:12px;padding:.7rem 1rem;margin-bottom:1rem}
+.footer{background:var(--ink);color:#ddd;padding:3rem 0 1.5rem;margin-top:4rem}
+.footer a{display:block;color:#bbb;text-decoration:none;margin:.3rem 0}
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);justify-content:space-around;padding:.5rem 0;z-index:50}
+.mobile-nav a{display:flex;flex-direction:column;align-items:center;font-size:.72rem;color:#666;text-decoration:none}
+.mobile-nav i{font-size:1.25rem}
+@media(max-width:991px){.mobile-nav{display:flex}}
+.toast-flash{position:fixed;top:80px;right:16px;z-index:100}
+</style>
+</head>
+<body>
+<div class="announcement"><i class="bi bi-lightning-charge-fill"></i> Free delivery above ₱499 · Use <b>WELCOME100</b> for ₱100 off</div>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#/"><strong class="cafe-word">Cafe</strong></a>
+    <button class="navbar-toggler border-0 shadow-none" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="Toggle navigation"><i class="bi bi-list fs-2"></i></button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <form class="nav-search mx-lg-auto my-3 my-lg-0" id="navSearch">
+        <i class="bi bi-search"></i>
+        <input id="navQ" placeholder="Search biryani, pizza, desserts...">
+      </form>
+      <ul class="navbar-nav align-items-lg-center gap-lg-2">
+        <li class="nav-item"><a class="nav-link" href="#/menu">Explore Menu</a></li>
+        <li class="nav-item"><a class="nav-link" href="#/favorites">Favorites</a></li>
+        <li class="nav-item"><a class="btn btn-outline-dark rounded-pill px-4" href="#/login">Sign in</a></li>
+        <li class="nav-item"><a class="cart-button" href="#/cart"><i class="bi bi-bag-heart"></i><span>Cart</span><b data-cart-count>0</b></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div id="flash"></div>
+<main id="app"></main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-5"><span class="cafe-word">Cafe</span><p class="mt-3">Big flavours, honest ingredients and happiness delivered to your doorstep.</p></div>
+      <div class="col-6 col-lg-2"><h6>Discover</h6><a href="#/menu">Our menu</a><a href="#/cart">Apply offers</a></div>
+      <div class="col-6 col-lg-2"><h6>Help</h6><a href="tel:+639000000000">Contact us</a><a href="mailto:hello@cafe.test">Email support</a></div>
+      <div class="col-lg-3"><h6>We are open</h6><p><i class="bi bi-clock"></i> 10:00 AM – 11:00 PM</p></div>
+    </div>
+    <hr><small>© <span id="yr"></span> Cafe · Made with <i class="bi bi-heart-fill text-danger"></i> for food lovers</small>
+  </div>
+</footer>
+
+<nav class="mobile-nav">
+  <a href="#/"><i class="bi bi-house"></i><span>Home</span></a>
+  <a href="#/menu"><i class="bi bi-grid"></i><span>Menu</span></a>
+  <a href="#/cart"><i class="bi bi-bag"></i><span>Cart</span></a>
+  <a href="#/favorites"><i class="bi bi-heart"></i><span>Favorites</span></a>
+  <a href="#/login"><i class="bi bi-person"></i><span>Account</span></a>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* Sample data replaces the PHP/MySQL queries */
+const CATS=[{id:1,name:'Pizza',icon:'bi-pie-chart'},{id:2,name:'Biryani',icon:'bi-egg-fried'},{id:3,name:'Burgers',icon:'bi-basket'},{id:4,name:'Desserts',icon:'bi-cake2'}];
+const ITEMS=[
+{id:1,cat:1,name:'Margherita Pizza',emoji:'🍕',desc:'Wood-fired crust, San Marzano tomato and fresh basil.',price:349,compare:399,veg:1,rating:4.7,prep:25,best:1,spice:0},
+{id:2,cat:2,name:'Chicken Dum Biryani',emoji:'🍛',desc:'Slow-cooked basmati layered with tender spiced chicken.',price:299,compare:349,veg:0,rating:4.8,prep:35,best:1,spice:2},
+{id:3,cat:3,name:'Smash Cheeseburger',emoji:'🍔',desc:'Double smashed patty, melted cheddar, house sauce.',price:259,compare:0,veg:0,rating:4.6,prep:20,best:1,spice:1},
+{id:4,cat:4,name:'Molten Chocolate Cake',emoji:'🍰',desc:'Warm chocolate centre served with vanilla cream.',price:179,compare:199,veg:1,rating:4.9,prep:15,best:0,spice:0},
+{id:5,cat:1,name:'Pepperoni Pizza',emoji:'🍕',desc:'Crispy pepperoni, mozzarella and chilli oil.',price:399,compare:0,veg:0,rating:4.5,prep:25,best:0,spice:2},
+{id:6,cat:2,name:'Paneer Biryani',emoji:'🍚',desc:'Fragrant rice with grilled paneer and saffron.',price:279,compare:0,veg:1,rating:4.4,prep:30,best:0,spice:1},
+{id:7,cat:3,name:'Veggie Burger',emoji:'🥪',desc:'Crisp vegetable patty, lettuce, tomato, garlic mayo.',price:219,compare:0,veg:1,rating:4.3,prep:18,best:0,spice:0},
+{id:8,cat:4,name:'Mango Cheesecake',emoji:'🍮',desc:'Creamy baked cheesecake with fresh mango compote.',price:189,compare:0,veg:1,rating:4.6,prep:10,best:0,spice:0}
+];
+const SETTINGS={tax:5,delivery:49,freeAbove:499};
+const COUPONS={WELCOME100:100};
+
+/* State (in-memory; persisted to localStorage when available) */
+let cart={},favs=new Set(),coupon='';
+try{cart=JSON.parse(localStorage.cafeCart||'{}');favs=new Set(JSON.parse(localStorage.cafeFavs||'[]'));coupon=localStorage.cafeCoupon||''}catch(e){}
+const save=()=>{try{localStorage.cafeCart=JSON.stringify(cart);localStorage.cafeFavs=JSON.stringify([...favs]);localStorage.cafeCoupon=coupon}catch(e){}};
+
+const $=s=>document.querySelector(s);
+const money=n=>'₱'+Number(n).toLocaleString('en-PH',{minimumFractionDigits:0,maximumFractionDigits:2});
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cartCount=()=>Object.values(cart).reduce((a,b)=>a+b,0);
+const byId=id=>ITEMS.find(i=>i.id==id);
+
+function totals(){
+  const subtotal=Object.entries(cart).reduce((s,[id,q])=>s+byId(id).price*q,0);
+  const delivery=!subtotal||subtotal>=SETTINGS.freeAbove?0:SETTINGS.delivery;
+  const discount=Math.min(subtotal,COUPONS[coupon]||0);
+  const tax=Math.round((subtotal-discount)*SETTINGS.tax)/100;
+  return{subtotal,delivery,discount,tax,total:subtotal-discount+delivery+tax};
+}
+function flash(msg,type='success'){
+  $('#flash').innerHTML=`<div class="toast-flash alert alert-${type==='error'?'danger':'success'} shadow">${esc(msg)}</div>`;
+  setTimeout(()=>$('#flash').innerHTML='',2200);
+}
+
+function foodCard(i){
+  return `<article class="food-card">
+  <div class="food-image" onclick="location.hash='#/item/${i.id}'">${i.emoji}
+    <span class="veg-dot ${i.veg?'':'non-veg'}"><i></i></span>
+    <button class="heart ${favs.has(i.id)?'active':''}" onclick="event.stopPropagation();toggleFav(${i.id})" aria-label="Toggle favorite"><i class="bi bi-heart${favs.has(i.id)?'-fill':''}"></i></button>
+    ${i.best?'<span class="bestseller"><i class="bi bi-award-fill"></i> Bestseller</span>':''}
+  </div>
+  <div class="food-body">
+    <div class="food-meta"><span><i class="bi bi-star-fill"></i> ${i.rating}</span><span><i class="bi bi-clock"></i> ${i.prep} min</span></div>
+    <h3><a class="text-decoration-none text-dark" href="#/item/${i.id}">${esc(i.name)}</a></h3>
+    <p>${esc(i.desc)}</p>
+    <div class="food-bottom"><div class="price">${money(i.price)}${i.compare?`<del>${money(i.compare)}</del>`:''}</div>
+    <button class="add-btn" onclick="addCart(${i.id})"><i class="bi bi-plus-lg"></i> Add</button></div>
+  </div></article>`;
+}
+
+/* Actions (replace actions.php) */
+function addCart(id,q=1){cart[id]=(cart[id]||0)+q;save();flash('Added to cart');refresh()}
+function setQty(id,q){if(q<1)delete cart[id];else cart[id]=q;save();render()}
+function toggleFav(id){favs.has(id)?favs.delete(id):favs.add(id);save();render()}
+function applyCoupon(){const c=$('#code').value.trim().toUpperCase();if(COUPONS[c]){coupon=c;save();flash('Coupon applied')}else flash('Invalid coupon code','error');render()}
+function removeCoupon(){coupon='';save();render()}
+function placeOrder(){if(!cart||!cartCount())return;cart={};coupon='';save();location.hash='#/success'}
+
+/* Pages */
+const pages={
+home(){
+  const featured=[...ITEMS].sort((a,b)=>b.best-a.best||b.rating-a.rating).slice(0,4);
+  return `<section class="hero"><div class="container"><div class="row align-items-center">
+    <div class="col-lg-7"><h1>We deliver the<br>taste of life</h1><p class="lead">Get it delivered right to your door!</p>
+    <form onsubmit="event.preventDefault();location.hash='#/menu?q='+encodeURIComponent(this.q.value)"><input name="q" required minlength="2" placeholder="Enter your food name..." aria-label="Search food"><button class="btn-brand">Find food</button></form></div>
+    <div class="col-lg-5 hero-art">🛵</div></div></div></section>
+  <section class="container mt-5"><h2 class="fw-bold">Browse food category</h2>
+  <div class="d-flex flex-wrap gap-2 my-3">${CATS.map(c=>`<a class="pill" href="#/menu?category=${c.id}"><i class="bi ${c.icon}"></i> ${c.name}</a>`).join('')}</div>
+  <div class="food-grid mt-4">${featured.map(foodCard).join('')}</div></section>`;
+},
+menu(p){
+  const cat=+p.get('category')||0,q=(p.get('q')||'').trim().toLowerCase(),veg=p.has('veg'),sort=p.get('sort')||'popular';
+  let list=ITEMS.filter(i=>(!cat||i.cat===cat)&&(!veg||i.veg)&&(!q||(i.name+i.desc+CATS.find(c=>c.id===i.cat).name).toLowerCase().includes(q)));
+  const sorters={'price-low':(a,b)=>a.price-b.price,'price-high':(a,b)=>b.price-a.price,rating:(a,b)=>b.rating-a.rating,newest:(a,b)=>b.id-a.id,popular:(a,b)=>b.best-a.best||b.rating-a.rating};
+  list.sort(sorters[sort]||sorters.popular);
+  const link=(o)=>{const n=new URLSearchParams({category:cat||'',q:p.get('q')||'',sort,...(veg?{veg:1}:{}),...o});[...n.keys()].forEach(k=>!n.get(k)&&n.delete(k));return '#/menu?'+n};
+  const title=q?`Results for “${esc(p.get('q'))}”`:cat?CATS.find(c=>c.id===cat).name:'All delicious dishes';
+  return `<section class="container py-5"><h1 class="fw-bold">Made fresh. Made memorable.</h1><p class="text-muted">Discover bold flavours and comforting classics, prepared just for you.</p>
+  <div class="d-flex flex-wrap gap-2 align-items-center my-3">
+    <a class="pill ${!cat?'active':''}" href="${link({category:''})}"><i class="bi bi-grid"></i> All</a>
+    ${CATS.map(c=>`<a class="pill ${cat===c.id?'active':''}" href="${link({category:c.id})}"><i class="bi ${c.icon}"></i> ${c.name}</a>`).join('')}
+    <a class="pill ms-auto ${veg?'active':''}" href="${link({veg:veg?'':1})}">Veg only</a>
+  </div>
+  <div class="d-flex justify-content-between align-items-end my-3"><div><h2 class="h4 mb-0">${title}</h2><small class="text-muted">${list.length} dishes available</small></div>
+  <select class="form-select w-auto rounded-pill" onchange="location.hash='${link({sort:''}).replace(/'/g,"\\'")}'+(this.value?'${link({sort:''}).includes('?')&&link({sort:''})!=='#/menu?'?'&':''}sort='+this.value:'')">
+    ${[['popular','Sort: Popular'],['rating','Highest rated'],['price-low','Price: Low to high'],['price-high','Price: High to low'],['newest','Newest first']].map(([v,l])=>`<option value="${v}" ${sort===v?'selected':''}>${l}</option>`).join('')}</select></div>
+  ${list.length?`<div class="food-grid">${list.map(foodCard).join('')}</div>`:`<div class="empty"><i class="bi bi-search"></i><h3>No dishes found</h3><p>Try another search or explore all our categories.</p><a class="btn-brand text-decoration-none" href="#/menu">View all dishes</a></div>`}</section>`;
+},
+item(p,id){
+  const i=byId(id);if(!i)return `<div class="empty"><h2>Dish not found</h2></div>`;
+  const cat=CATS.find(c=>c.id===i.cat).name;
+  return `<section class="container py-5"><div class="row g-5"><div class="col-md-6"><div class="detail-emoji">${i.emoji}</div></div>
+  <div class="col-md-6"><nav class="small mb-2"><a href="#/">Home</a> / <a href="#/menu">Menu</a> / ${cat}</nav>
+  <span class="badge ${i.veg?'text-bg-success':'text-bg-danger'}">${i.veg?'VEGETARIAN':'NON-VEGETARIAN'}</span>
+  <h1 class="fw-bold mt-2">${esc(i.name)}</h1>
+  <p class="text-muted"><b class="text-dark"><i class="bi bi-star-fill text-warning"></i> ${i.rating}</b> · <i class="bi bi-clock"></i> ${i.prep}–${i.prep+10} min</p>
+  <p>${esc(i.desc)}</p><p><b>Spice level:</b> ${'🌶'.repeat(i.spice)||'Mild'}</p>
+  <div class="d-flex align-items-center gap-3 mt-4"><div class="h3 mb-0 price">${money(i.price)}${i.compare?`<del>${money(i.compare)}</del>`:''}</div>
+  <div class="qty"><button onclick="qtyDetail(-1)">−</button><span id="dq" class="px-2">1</span><button onclick="qtyDetail(1)">+</button></div>
+  <button class="btn-brand flex-grow-1" onclick="addCart(${i.id},+$('#dq').textContent)"><i class="bi bi-bag-plus"></i> Add to cart</button></div></div></div></section>`;
+},
+cart(){
+  const ids=Object.keys(cart);
+  if(!ids.length)return `<div class="empty"><i class="bi bi-bag-x"></i><h2>Your cart is hungry</h2><p>Add something delicious and come back here.</p><a class="btn-brand text-decoration-none" href="#/menu">Explore the menu</a></div>`;
+  const t=totals();
+  return `<section class="container py-5"><h1 class="fw-bold">Your delicious cart</h1><div class="row g-4 mt-1"><div class="col-lg-8">
+  ${ids.map(id=>{const i=byId(id);return `<article class="cart-item"><div class="em">${i.emoji}</div><div class="flex-grow-1"><h3 class="h6 mb-1">${esc(i.name)}</h3><small class="text-muted">${money(i.price)} each</small></div>
+  <div class="qty"><button onclick="setQty(${id},${cart[id]-1})">−</button><span class="px-2">${cart[id]}</span><button onclick="setQty(${id},${cart[id]+1})">+</button></div>
+  <strong style="min-width:80px;text-align:right">${money(i.price*cart[id])}</strong><button class="btn btn-sm text-danger" onclick="setQty(${id},0)" aria-label="Remove"><i class="bi bi-trash3"></i></button></article>`}).join('')}
+  <p class="mt-3 text-muted"><i class="bi bi-scooter"></i> Delivery in 30–40 minutes</p></div>
+  <div class="col-lg-4"><aside class="bill-card"><h3 class="h5">Bill summary</h3>
+  <div class="input-group my-3"><input id="code" class="form-control" placeholder="Enter coupon code" value="${esc(coupon)}"><button class="btn btn-dark" onclick="applyCoupon()">Apply</button></div>
+  ${coupon?`<p class="small text-success"><span><b>${esc(coupon)}</b> applied</span><a href="#" onclick="removeCoupon();return false">REMOVE</a></p>`:`<p class="small text-muted"><span><b>WELCOME100</b> saves ₱100</span></p>`}
+  <p><span>Item total</span><b>${money(t.subtotal)}</b></p>
+  <p><span>Delivery fee</span><b class="${t.delivery?'':'text-success'}">${t.delivery?money(t.delivery):'FREE'}</b></p>
+  ${t.discount?`<p class="text-success"><span>Coupon discount</span><b>−${money(t.discount)}</b></p>`:''}
+  <p><span>Taxes &amp; charges</span><b>${money(t.tax)}</b></p><hr>
+  <p class="fs-5"><b>To pay</b><strong>${money(t.total)}</strong></p>
+  <a class="btn-brand w-100 d-block text-center text-decoration-none" href="#/checkout">Proceed to checkout <i class="bi bi-arrow-right"></i></a></aside></div></div></section>`;
+},
+checkout(){
+  if(!cartCount()){location.hash='#/menu';return ''}
+  const t=totals();
+  return `<section class="container py-5"><h1 class="fw-bold">Complete your order</h1><form class="row g-4 mt-1" onsubmit="event.preventDefault();placeOrder()">
+  <div class="col-lg-8"><div class="border rounded-4 p-4">
+  <h3 class="h5">Order type</h3><div class="d-flex gap-3 mb-4"><label><input type="radio" name="ot" checked> Delivery (30–40 min)</label><label><input type="radio" name="ot"> Self pickup (20 min)</label></div>
+  <h3 class="h5">Contact &amp; delivery details</h3><div class="row g-3 mb-4"><div class="col-md-6"><input class="form-control" placeholder="Full name" required></div><div class="col-md-6"><input class="form-control" placeholder="Phone number" required></div>
+  <div class="col-12"><textarea class="form-control" rows="3" placeholder="Delivery address" required maxlength="300"></textarea></div><div class="col-12"><input class="form-control" placeholder="Order note (optional)" maxlength="500"></div></div>
+  <h3 class="h5">Payment method</h3><div class="d-flex flex-wrap gap-3"><label><input type="radio" name="pm" checked> UPI</label><label><input type="radio" name="pm"> Card</label><label><input type="radio" name="pm"> Cash on delivery</label></div></div></div>
+  <div class="col-lg-4"><aside class="bill-card"><h3 class="h5">Your order</h3>
+  ${Object.keys(cart).map(id=>{const i=byId(id);return `<p><span>${i.emoji} ${esc(i.name)} × ${cart[id]}</span><b>${money(i.price*cart[id])}</b></p>`}).join('')}<hr>
+  <p><span>Delivery</span><b>${t.delivery?money(t.delivery):'FREE'}</b></p><p><span>Tax</span><b>${money(t.tax)}</b></p><p class="fs-5"><b>Total</b><strong>${money(t.total)}</strong></p>
+  <button class="btn-brand w-100">Place order <i class="bi bi-arrow-right"></i></button></aside></div></form></section>`;
+},
+success(){return `<div class="empty"><i class="bi bi-check-circle-fill"></i><h1>Yay! Food is on the way.</h1><p>We've received your order and our kitchen is getting to work.</p><a class="btn-brand text-decoration-none" href="#/menu">Back to menu</a></div>`},
+favorites(){
+  const list=ITEMS.filter(i=>favs.has(i.id));
+  return `<section class="container py-5"><h1 class="fw-bold">Your favorite flavours</h1><p class="text-muted">All the dishes you love, ready for one-click ordering.</p>
+  ${list.length?`<div class="food-grid">${list.map(foodCard).join('')}</div>`:`<div class="empty"><i class="bi bi-heart"></i><h2>No favorites yet</h2><p>Tap the heart on any dish to save it here.</p><a class="btn-brand text-decoration-none" href="#/menu">Explore dishes</a></div>`}</section>`;
+},
+login(){
+  return `<div class="auth"><h1 class="fw-bold">Hungry? Let's fix that.</h1><p class="text-muted">Sign in to continue your delicious journey.</p>
+  <form onsubmit="event.preventDefault();flash('Demo only – sign-in needs the PHP backend','error')"><label>Email address</label><input type="email" required><label>Password</label><input type="password" required>
+  <button class="btn-brand w-100">Sign in</button></form><p class="mt-3">New to Cafe? <a href="#/register">Create an account</a></p></div>`;
+},
+register(){
+  return `<div class="auth"><h1 class="fw-bold">Create your account</h1><p class="text-muted">Great food and member-only rewards are waiting.</p>
+  <form onsubmit="event.preventDefault();flash('Demo only – registration needs the PHP backend','error')"><label>Full name</label><input required><label>Email address</label><input type="email" required><label>Phone number</label><input required><label>Password</label><input type="password" minlength="6" required>
+  <button class="btn-brand w-100">Create account</button></form><p class="mt-3">Already a member? <a href="#/login">Sign in</a></p></div>`;
+}
+};
+
+function qtyDetail(d){const el=$('#dq');el.textContent=Math.max(1,+el.textContent+d)}
+function refresh(){document.querySelectorAll('[data-cart-count]').forEach(e=>e.textContent=cartCount())}
+function render(){
+  const [path,qs]=(location.hash.slice(1)||'/').split('?');
+  const parts=path.split('/').filter(Boolean),name=parts[0]||'home';
+  const fn=pages[name]||(()=>`<div class="empty"><i class="bi bi-compass"></i><h1>Page not found</h1><a class="btn-brand text-decoration-none" href="#/">Take me home</a></div>`);
+  $('#app').innerHTML=fn(new URLSearchParams(qs||''),parts[1]);
+  refresh();
+}
+$('#navSearch').addEventListener('submit',e=>{e.preventDefault();location.hash='#/menu?q='+encodeURIComponent($('#navQ').value)});
+$('#yr').textContent=new Date().getFullYear();
+window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
+render();
+</script>
+</body>
+</html>
